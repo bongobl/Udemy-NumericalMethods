@@ -8,9 +8,13 @@ def isolateLinear(x):
 
 # x = sqrt((5x - 3) / 2)
 def isolateQuad(x):
-    isValid = x >= 3/5
-    return (isValid, sqrt((5 * x-3) / 2) if isValid else nan)
+    isInDomain = x >= 3/5
+    return (isInDomain, sqrt((5 * x-3) / 2) if isInDomain else nan)
 
+def SimpleIterFindRoot(f, x):
+    isInDomain, xNew = f(x)
+    return (isInDomain, xNew if isInDomain else nan)
+    
 if __name__ == "__main__":
 
     epsilon = 0.000001
@@ -20,12 +24,14 @@ if __name__ == "__main__":
     # starting guess
     x = float(input("Enter starting guess: "))
     for i in range(100):
-        isValid, xNew = isolateQuad(x)
+        isValid, xNew = SimpleIterFindRoot(isolateQuad, x)
+
         if not isValid:
             break
         delta = abs(x - xNew)
         
         print(f"iter {i}: value = {xNew}, delta = {delta}")
+        
         if delta < epsilon:
             foundSolution = True
             break
