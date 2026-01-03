@@ -1,5 +1,4 @@
-from math import sqrt, cos
-from math import nan
+from math import sqrt, cos, nan
 
 def BisectionFindRoot(f, lower, upper):
     return findRootImpl(f, lower, upper)
