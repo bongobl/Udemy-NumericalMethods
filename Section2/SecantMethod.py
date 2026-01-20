@@ -40,10 +40,10 @@ def SecantMethodFindRoot(f, lower, upper, maxIter = 100, epsilonX = 1.0E-6, yEqu
         print(f"iter {iter}: xPrev = {xPrev}, xCurr = {xCurr}, xNext = {xNext}")
 
         # if xNext sits right at a root
-        if yNext == 0:
+        if abs(yNext - 0) < yEqualityBias:
             return (True, xNext, "Exact root found at bound!")
 
-        # Found estinated root value, terminate
+        # Found estimated root value, terminate
         if abs(xNext - xCurr) < epsilonX:
             break
         
