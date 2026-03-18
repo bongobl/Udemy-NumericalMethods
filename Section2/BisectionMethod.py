@@ -78,7 +78,13 @@ def findRootImpl(f, lower, upper, useRegulaFalsi=False):
 if __name__ == "__main__":
 
     # obtains lower and upper bounds from stdin as a string pair and converts it to a float pair
-    lowerX, upperX = tuple(float(x) for x in input("Enter the lower bound then the upper bound: ").split()) 
+    while True:
+        inputArgs= input("Enter the lower bound then the upper bound: ").split()
+        if len(inputArgs) == 2:
+            break;
+        print(" -- Two (and only two) numbers are expected -- ")
+
+    lowerX, upperX = tuple(float(x) for x in inputArgs) 
 
     func1 = lambda x: (True, 2 * x ** 2 - 5 * x + 3)
     func2 = lambda x: (True, x ** 2 + cos(x) ** 2 - 4 * x)
@@ -87,8 +93,9 @@ if __name__ == "__main__":
 
     if isValid:
         print(f"Calulated value of X = {root}")
+        if remark != "":
+            print(f"  -- Note: {remark} --")
     else:
         print(f"Could not find solution given specified bounds")
-    
-    if remark != "":
-        print(f" ** {remark} **")
+        if remark != "":
+            print(f" -- Error Description: {remark} --")

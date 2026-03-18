@@ -15,49 +15,63 @@ def culpritFunc(x):
 def culpritFuncPrime(x):
     return (True, (5/4) - (3/4) * x ** 2)
 
+def funcNotDefinedForNegatives(x):
+    if x < 0:
+        return (False, nan)
+    return (True, x)
+def funcNotDefinedForPositives(x):
+    if x > 0:
+        return (False, nan)
+    return (True, x)
 
-def NewtonRaphsonFindRoot(f, fPrime, x):
-    isInDomain, f_x = f(x)
+def NewtonRaphsonFindNextX(f, fPrime, x):
+    isInDomain, y = f(x)
 
-    errorRet = (False, nan)
     if not isInDomain:
-        return errorRet
+        return (False, nan, "X not in function domain")
 
     isInDomain, fprime_x = fPrime(x)
 
     if not isInDomain:
-        return errorRet
+        return (False, nan, "X not in function derivative's domain")
 
     if fprime_x == 0:
-        return errorRet
+        return (False, nan, "Function derivative evaluated to 0, rendering this root finding method useless")
 
-    return (True, x - f_x / fprime_x)
+    return (True, x - y / fprime_x, "")
 
-if __name__ == "__main__":
+def NewtonRaphsonFindRoot(f, fPrime, x, numIterations=100, epsilon = 0.000001):
 
-    epsilon = 0.000001
-
-    foundSolution = False 
-    x = float(input("Enter starting guess: "))
-    for i in range(100):
+    for i in range(numIterations):
         
-        isValid, xNew = NewtonRaphsonFindRoot(func2, func2Prime, x)
+        isValid, xNew, remark = NewtonRaphsonFindNextX(f, fPrime, x)
 
         if not isValid:
-            break
+            return isValid, xNew, remark
+
         delta = abs(x - xNew)
 
         print(f"iter {i}: value = {xNew}, delta = {delta}")
 
         if delta < epsilon:
-            foundSolution = True
-            break
+            return (True, xNew, "")
         x = xNew
+    return (False, nan, f"Unable to find suitable root after {numIterations} iterations")
 
-    if foundSolution:
-        print(f"Calulated value of X = {x}")
+if __name__ == "__main__":
+
+    x = float(input("Enter starting guess: "))
+
+    isValid, root, remark = NewtonRaphsonFindRoot(culpritFunc, culpritFuncPrime, x)
+
+    if isValid:
+        print(f"Calulated value of X = {root}")
+        if remark != "":
+            print(f"  -- Note: {remark} --")
     else:
-        print("Could not find solution given starting guess")
+        print(f"Could not find solution given specified bounds")
+        if remark != "":
+            print(f" -- Error Description: {remark} --")
 
         
     
