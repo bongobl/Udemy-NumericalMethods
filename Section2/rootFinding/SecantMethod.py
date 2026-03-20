@@ -1,6 +1,6 @@
 from math import sqrt, cos, nan
 
-def SecantMethodFindRoot(f, lower, upper, maxIter = 100, epsilonX = 1.0E-6, yEqualityBias = 1.0E-12):
+def findRoot(f, lower, upper, maxIter = 100, epsilonX = 1.0E-6, yEqualityBias = 1.0E-12):
 
     # swap bounds if they are out of order
     xPrev, xCurr = (lower, upper)
@@ -55,28 +55,3 @@ def SecantMethodFindRoot(f, lower, upper, maxIter = 100, epsilonX = 1.0E-6, yEqu
     else:
         return (False, nan, f"Could not find the root with {maxIter} iterations")
     return (True, xNext, "")
-
-if __name__ == "__main__":
-
-    # obtains lower and upper bounds from stdin as a string pair and converts it to a float pair
-    while True:
-        inputArgs= input("Enter the lower bound then the upper bound: ").split()
-        if len(inputArgs) == 2:
-            break;
-        print(" -- Two (and only two) numbers are expected -- ")
-
-    lowerX, upperX = tuple(float(x) for x in inputArgs)
-
-    func1 = lambda x: (True, 2 * x ** 2 - 5 * x + 3)
-    func2 = lambda x: (True, x ** 2 + cos(x) ** 2 - 4 * x)
-
-    isValid, root, remark = SecantMethodFindRoot(func2, lowerX, upperX)
-
-    if isValid:
-        print(f"Calulated value of X = {root}")
-        if remark != "":
-            print(f"  -- Note: {remark} --")
-    else:
-        print(f"Could not find solution given specified bounds")
-        if remark != "":
-            print(f" -- Error Description: {remark} --")
