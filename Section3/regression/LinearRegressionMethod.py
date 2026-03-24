@@ -1,10 +1,11 @@
-from common import *
+from math import nan
 from numpy import array, sum, mean
+
 # Algorithm derived from
 # Ac = b + e
 # (A_t * A)c = A_t * b
 # c = (A_t * A)^-1 * A_t * b
-def linearRegressionGetValueFromDatset(xValues, yValues, sampleX, UseNumPy=False):
+def calcYValue(xValues, yValues, sampleX, UseNumPy=False):
 
     # assert both arrays have an equal number of elements
     if len(xValues) != len(yValues):
@@ -52,22 +53,3 @@ def linearRegressionGetValueFromDatset(xValues, yValues, sampleX, UseNumPy=False
     c1 /= det
 
     return (True, c0 + c1 * sampleX, "")
-
-
-if __name__ == "__main__":
-
-    print(f"X Vals = {xVals}")
-    print(f"Temps = {yVals}")
-
-    sampleX = float(input("Enter time value: "))
-
-    isValid, calculatedYVal, remark = linearRegressionGetValueFromDatset(xVals, yVals, sampleX, UseNumPy=True)
-
-    if isValid:
-        print(f"Calulated value of temp = {calculatedYVal}")
-        if remark != "":
-            print(f"  -- Note: {remark} --")
-    else:
-        print(f"Could not calculate a temperature value for the given time value")
-        if remark != "":
-            print(f" -- Error Description: {remark} --")

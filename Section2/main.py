@@ -17,22 +17,28 @@ methodToNumInputsMap = {
 }
 if __name__ == "__main__":
 
-    print("Select a root finding option")
+    print("Select a root finding method")
     print("----------------------------")
     for method in RootFindingMethod:
         print(f"{method.value}) {method.name}")
     print()
     while True:
         inputArgs = input("Choice: ").split()
+
+        # Only one argument should be entered
         if len(inputArgs) != 1:
             print(" -- Enter a single integer corresponding to choice -- ")
             continue
         selectedMethodNum = inputArgs[0]
+
+        # The argument should be an integer
         if not selectedMethodNum.lstrip('-').isdigit():
             print(" -- Argument not recognized as an integer -- ")
             continue
 
         selectedMethodNum = int(selectedMethodNum)
+
+        # The integer argument should be in range
         if selectedMethodNum < 0 or selectedMethodNum >= len(RootFindingMethod):
             print(f" -- No method corresponding to integer {selectedMethodNum} -- ")
             continue
@@ -61,7 +67,7 @@ if __name__ == "__main__":
             print(f" -- Internal error: {selectedMethod.name} requires a number of arguments unsupported by this prompt system -- ")
             exit(0)
 
-            
+    # Note: no default case needed, selectedMethod is already a valid instance of RootFindingMethod
     match selectedMethod:
         case RootFindingMethod.SimpleIterations:
             isValid, root, remark = SimpleIterationsMethod.findRoot(common.isolateQuad, guessX)
@@ -71,6 +77,7 @@ if __name__ == "__main__":
             isValid, root, remark = BisectionMethod.findRoot(common.foo1, lowerX, upperX, useRegulaFalsi=True)
         case RootFindingMethod.Secant:
             isValid, root, remark = SecantMethod.findRoot(common.foo2, lowerX, upperX)
+
     if isValid:
         print(f"Calulated value of X = {root}")
         if remark != "":

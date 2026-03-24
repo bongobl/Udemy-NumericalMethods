@@ -1,7 +1,6 @@
-from common import *
+from math import nan
 
-
-def linearInterpolationGetValueFromDatset(xValues, yValues, sampleX):
+def calcYValue(xValues, yValues, sampleX):
 
     # assert both arrays have an equal number of elements
     if len(xValues) != len(yValues):
@@ -30,23 +29,4 @@ def linearInterpolationGetValueFromDatset(xValues, yValues, sampleX):
             return (True, (1-t) * yValues[i-1] + t * yValues[i],"")
     else:
         return (False, nan, f"x value entered was greater than the largest xValue data point value of {currX}")
-
-
-if __name__ == "__main__":
-
-    print(f"Times = {times}")
-    print(f"Temps = {temps}")
-
-    sampleTime = float(input("Enter time value: "))
-
-    isValid, calculatedTemp, remark = linearInterpolationGetValueFromDatset(times, temps, sampleTime)
-
-    if isValid:
-        print(f"Calulated value of temp = {calculatedTemp}")
-        if remark != "":
-            print(f"  -- Note: {remark} --")
-    else:
-        print(f"Could not calculate a temperature value for the given time value")
-        if remark != "":
-            print(f" -- Error Description: {remark} --")
     

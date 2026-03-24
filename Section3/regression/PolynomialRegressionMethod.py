@@ -1,11 +1,11 @@
-from common import *
+from math import nan
 from numpy import array, empty, linalg
 
 # Algorithm derived from
 # Ac = b + e
 # (A_t * A)c = A_t * b
 # computes matrix A_t * A and vector = A_t * b and solves c
-def polynomialRegressionGetValueFromDatset(xValues, yValues, terms, sampleX):
+def calcYValue(xValues, yValues, terms, sampleX):
 
     # assert both arrays have an equal number of elements
     if len(xValues) != len(yValues):
@@ -45,22 +45,3 @@ def polynomialRegressionGetValueFromDatset(xValues, yValues, terms, sampleX):
     c = linalg.solve(mat, vec)
 
     return (True, sum([ci * sampleX ** i for ci, i in zip(c, range(terms))]), "")
-
-    
-if __name__ == "__main__":
-
-    print(f"X Vals = {xVals2}")
-    print(f"Temps = {yVals2}")
-
-    sampleX = float(input("Enter x value: "))
-
-    isValid, calculatedYVal, remark = polynomialRegressionGetValueFromDatset(xVals2, yVals2, 3, sampleX)
-
-    if isValid:
-        print(f"Calulated value of temp = {calculatedYVal}")
-        if remark != "":
-            print(f"  -- Note: {remark} --")
-    else:
-        print(f"Could not calculate a temperature value for the given time value")
-        if remark != "":
-            print(f" -- Error Description: {remark} --")

@@ -1,4 +1,3 @@
-from math import sqrt, cos, nan
 
 # temp vs time sample data
 times = [0, 20, 40, 60, 80, 100]

@@ -1,6 +1,6 @@
-from common import *
+from math import nan
 
-def newtonMethodInterpolationGetValueFromDatset(xValues, yValues, sampleX):
+def calcYValue(xValues, yValues, sampleX):
 
     # assert both arrays have an equal number of elements
     if len(xValues) != len(yValues):
@@ -38,22 +38,3 @@ def newtonMethodInterpolationGetValueFromDatset(xValues, yValues, sampleX):
         # term is defined by the current function evaluated at X multiplied by its coefficient
         finalVal += coeffs[i] * x_FuncVal
     return (True, finalVal, "")
-
-
-if __name__ == "__main__":
-
-    print(f"Times = {times}")
-    print(f"Temps = {temps}")
-
-    sampleTime = float(input("Enter time value: "))
-
-    isValid, calculatedTemp, remark = newtonMethodInterpolationGetValueFromDatset(times, temps, sampleTime)
-
-    if isValid:
-        print(f"Calulated value of temp = {calculatedTemp}")
-        if remark != "":
-            print(f"  -- Note: {remark} --")
-    else:
-        print(f"Could not calculate a temperature value for the given time value")
-        if remark != "":
-            print(f" -- Error Description: {remark} --")
