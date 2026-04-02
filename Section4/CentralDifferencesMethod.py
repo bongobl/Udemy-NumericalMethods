@@ -1,20 +1,19 @@
-from math import nan, cos, sin, comb
+from math import nan, comb
+import numpy as np
 from humanize import ordinal
+import matplotlib.pyplot as plt
+
 
 def sine(x):
-    return (True, sin(x))
+    return (True, np.sin(x))
 def cosine(x):
-    return (True, cos(x))
+    return (True, np.cos(x))
 
 def func1(x):
     return (True, 0.1*x**5 - 0.2*x**3 + 0.1*x - 0.2)
 
 def evaluateDerivative(f, order, x, stepSize = 0.01):
 
-    if order == 0:
-        inDomain, y = f(x)
-        return (inDomain, y if inDomain else nan, "" if inDomain else "X not in domain of function")
-    
     finalVal = 0
     if order % 2 == 0:
 
@@ -70,16 +69,30 @@ def evaluateDerivative(f, order, x, stepSize = 0.01):
 
 if __name__ == "__main__":
         
-    sampleX = float(input("Enter sample X value: "))
-    order = int(input("Enter the derivative order: "))
+    # with single input testing
+    # sampleX = float(input("Enter sample X value: "))
+    # order = int(input("Enter the derivative order: "))
 
-    isValid, derivative, remark = evaluateDerivative(func1, order, sampleX)
+    # isValid, derivative, remark = evaluateDerivative(func1, order, sampleX)
 
-    if isValid:
-        print(f"The {ordinal(order)} derivative of the function at X = {sampleX} is {derivative}")
-        if remark != "":
-            print(f"  -- Note: {remark} --")
-    else:
-        print(f"Could not calculate the {ordinal(order)} derivative for the function at X = {sampleX}")
-        if remark != "":
-            print(f" -- Error Description: {remark} --")
+    # if isValid:
+    #     print(f"The {ordinal(order)} derivative of the function at X = {sampleX} is {derivative}")
+    #     if remark != "":
+    #         print(f"  -- Note: {remark} --")
+    # else:
+    #     print(f"Could not calculate the {ordinal(order)} derivative for the function at X = {sampleX}")
+    #     if remark != "":
+    #         print(f" -- Error Description: {remark} --")
+
+    # with numpy/matplotlib
+    xVals = np.linspace(0, 1, 11)
+    _, firstDerivs, _ = evaluateDerivative(func1, 1, xVals)
+    _, secondDerivs, _ = evaluateDerivative(func1, 2, xVals)
+
+    _, funcVals = func1(xVals)
+    plt.plot(xVals, funcVals, '-k', xVals, firstDerivs, '--b', xVals, secondDerivs, '-.r')
+    plt.xlabel('x')
+    plt.ylabel('y,y\', y\'\'')
+    plt.legend(['y', 'y\'', 'y\'\''])
+    plt.grid()
+    plt.show()
