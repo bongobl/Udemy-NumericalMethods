@@ -18,6 +18,7 @@ if __name__ == "__main__":
         print(f"{method.value}) {method.name}")
     print()
 
+    # obtain user input for the method to use
     while True:
         inputArgs = input("Choice: ").split()
 
@@ -43,9 +44,11 @@ if __name__ == "__main__":
     selectedMethod = CurveGenMethod(selectedMethodNum)
     print(f"Using {selectedMethod.name} method\n")
 
+    # print the sample data points to be used by the interpolation/regression methods
     print(f"X values = {common.times}")
     print(f"Y values = {common.temps}")
 
+    # obtain user input for the x value to sample
     sampleX = float(input("Enter sample X value: "))
 
     # Note: no default case needed, selectedMethod is already a valid instance of CurveGenMethod
